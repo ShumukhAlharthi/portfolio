@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cybersecurity Portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050816;
+    color:white;
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+}
+
+/* MATRIX BACKGROUND */
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    opacity:0.2;
+}
+
+/* LOADING SCREEN */
+
+#loader{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+    transition:1s;
+}
+
+.loader-text{
+    font-size:2rem;
+    color:#00ffcc;
+    font-family:'Orbitron',sans-serif;
+    text-shadow:0 0 20px #00ffcc;
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0.4;
+    }
+}
+
+/* NAVBAR */
+
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.3);
+    z-index:1000;
+}
+
+.logo{
+    font-family:'Orbitron',sans-serif;
+    color:#00ffcc;
+    font-size:1.5rem;
+    text-shadow:0 0 10px #00ffcc;
+}
+
+nav ul{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#00ffcc;
+}
+
+/* HERO */
+
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 10%;
+}
+
+.hero-content{
+    animation:fadeUp 1.5s ease;
+}
+
+.hero h1{
+    font-size:4rem;
+    font-family:'Orbitron',sans-serif;
+    color:#00ffcc;
+    text-shadow:
+    0 0 10px #00ffcc,
+    0 0 30px #00ffcc;
+}
+
+.hero h2{
+    margin-top:20px;
+    color:#d0d0d0;
+    font-weight:300;
+}
+
+.typing{
+    margin-top:20px;
+    color:#00ffcc;
+    font-size:1.2rem;
+    min-height:40px;
+}
+
+.about-text {
+    width: 70;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.hero p{
+    margin-top:25px;
+    line-height:1.8;
+    color:#bdbdbd;
+    max-width:800px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:35px;
+    padding:15px 35px;
+    border-radius:40px;
+    background:#00ffcc;
+    color:black;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.4s;
+    box-shadow:0 0 15px #00ffcc;
+}
+
+.btn:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 25px #00ffcc;
+}
+
+/* SECTIONS */
+
+section{
+    padding:100px 10%;
+}
+
+.section-title{
+    text-align:center;
+    font-size:2.8rem;
+    color:#00ffcc;
+    margin-bottom:60px;
+    font-family:'Orbitron',sans-serif;
+}
+
+/* GLASS CARD */
+
+.glass-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(12px);
+    border-radius:25px;
+    padding:35px;
+    transition:0.4s;
+}
+
+.glass-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 25px rgba(0,255,204,0.4);
+}
+
+/* ABOUT */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+}
+
+.about-img img{
+    width:100%;
+    border-radius:25px;
+    box-shadow:0 0 30px rgba(0,255,204,0.4);
+}
+
+/* TIMELINE */
+
+.timeline{
+    position:relative;
+    max-width:1000px;
+    margin:auto;
+}
+
+.timeline::after{
+    content:'';
+    position:absolute;
+    width:4px;
+    background:#00ffcc;
+    top:0;
+    bottom:0;
+    left:50%;
+    margin-left:-2px;
+    box-shadow:0 0 15px #00ffcc;
+}
+
+.timeline-item{
+    padding:20px 40px;
+    position:relative;
+    width:50%;
+}
+
+.timeline-item::after{
+    content:'';
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:#00ffcc;
+    border-radius:50%;
+    top:30px;
+    right:-10px;
+    box-shadow:0 0 15px #00ffcc;
+}
+
+.left{
+    left:0;
+}
+
+.right{
+    left:50%;
+}
+
+.right::after{
+    left:-10px;
+}
+
+/* PROJECTS */
+
+.projects{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+}
+
+.project-card h3{
+    color:#00ffcc;
+    margin-bottom:15px;
+}
+
+/* CERTIFICATES */
+
+.certificates{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.certificates img{
+    width:100%;
+    border-radius:20px;
+    transition:0.4s;
+}
+
+.certificates img:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 25px rgba(0,255,204,0.5);
+}
+
+/* SKILLS */
+
+.skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    justify-content:center;
+}
+
+.skill{
+    padding:12px 24px;
+    border-radius:30px;
+    background:rgba(0,255,204,0.1);
+    border:1px solid #00ffcc;
+    color:#00ffcc;
+    transition:0.3s;
+}
+
+.skill:hover{
+    background:#00ffcc;
+    color:black;
+    box-shadow:0 0 20px #00ffcc;
+}
+
+/* CONTACT */
+
+.contact-links{
+    text-align:center;
+}
+
+.contact-links a{
+    display:inline-block;
+    margin:10px;
+    padding:15px 30px;
+    border-radius:30px;
+    background:#00ffcc;
+    color:black;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.contact-links a:hover{
+    transform:scale(1.05);
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:40px;
+    color:#aaa;
+}
+
+/* ANIMATIONS */
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.hero h1{
+    font-size:2.5rem;
+}
+
+.about-grid{
+    grid-template-columns:1fr;
+}
+
+.timeline::after{
+    left:20px;
+}
+
+.timeline-item{
+    width:100%;
+    padding-left:70px;
+    padding-right:25px;
+}
+
+.timeline-item::after{
+    left:10px;
+}
+
+.right{
+    left:0%;
+}
+
+nav ul{
+    display:none;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOADER -->
+
+<div id="loader">
+    <div class="loader-text">
+        ACCESSING SYSTEM...
+    </div>
+</div>
+
+<!-- MATRIX BACKGROUND -->
+
+<canvas id="matrix"></canvas>
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        CYBER.PORTFOLIO
+    </div>
+
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certifications">Certificates</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>Shumukh Alharthi</h1>
+
+        <h2>
+            Computer Science Graduate | Cybersecurity Enthusiast
+        </h2>
+
+        <div class="typing" id="typing"></div>
+
+        <p class="about-text">
+
+            Focused on cybersecurity, cyber defense,
+            and security operations with strong interest in protecting systems,
+            networks, and enterprise environments.
+            
+            Earned industry-recognized cybersecurity certifications, including Network+, Security+, CySA+, CSA, CND, and eCTHP, with practical knowledge in network defense, threat analysis, incident response, and security management.
+
+        </p>
+
+        <a href="#projects" class="btn">
+            Explore My Work
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <h2 class="section-title">
+        About Me
+    </h2>
+
+    <div class="glass-card" style="text-align:center;">
+
+    <h1 style="
+    font-size:4.5rem;
+    color:#00ffcc;
+    font-family:'Orbitron',sans-serif;
+    letter-spacing:6px;
+
+    text-shadow:
+    0 0 8px #00ffcc,
+    0 0 18px #00ffcc,
+    0 0 35px rgba(0,255,204,0.5);
+
+    animation: glow 2s infinite alternate;
+    ">
+
+    SHUMUKH
+
+    </h1>
+
+    <h2 style="
+    margin-top:15px;
+    color:white;
+    font-weight:300;
+    letter-spacing:4px;
+    ">
+
+    ALHARTHI
+
+    </h2>
+
+    <div style="
+    width:120px;
+    height:2px;
+    background:#00ffcc;
+    margin:25px auto;
+    box-shadow:0 0 15px #00ffcc;
+    "></div>
+
+    <p style="
+    margin-top:20px;
+    color:#bdbdbd;
+    line-height:2;
+    font-size:1rem;
+    letter-spacing:1px;
+    ">
+
+    CYBER DEFENSE • THREAT ANALYSIS • SECURITY OPERATIONS
+
+    </p>
+
+    <p style="
+    margin-top:25px;
+    color:#00ffcc;
+    font-family:monospace;
+    font-size:0.95rem;
+    " id="terminal-text">
+
+    Initializing Security Protocols...
+
+    </p>
+
+</div>
+
+<style>
+
+@keyframes glow{
+
+    from{
+
+        text-shadow:
+        0 0 8px #00ffcc,
+        0 0 18px #00ffcc;
+
+    }
+
+    to{
+
+        text-shadow:
+        0 0 12px #00ffcc,
+        0 0 28px #00ffcc,
+        0 0 40px rgba(0,255,204,0.7);
+
+    }
+
+}
+
+</style>
+
+<script>
+
+const messages = [
+
+"Initializing Security Protocols...",
+"Threat Monitoring Active...",
+"Network Defense Enabled...",
+"SOC Operations Running...",
+"Cyber Defense Specialist..."
+
+];
+
+let msgIndex = 0;
+let charIndex = 0;
+
+const terminal = document.getElementById("terminal-text");
+
+function typeEffect(){
+
+    if(charIndex < messages[msgIndex].length){
+
+        terminal.innerHTML += messages[msgIndex].charAt(charIndex);
+
+        charIndex++;
+
+        setTimeout(typeEffect,50);
+
+    }else{
+
+        setTimeout(eraseEffect,1800);
+
+    }
+
+}
+
+function eraseEffect(){
+
+    if(terminal.innerHTML.length > 0){
+
+        terminal.innerHTML =
+        terminal.innerHTML.slice(0,-1);
+
+        setTimeout(eraseEffect,25);
+
+    }else{
+
+        msgIndex++;
+
+        if(msgIndex >= messages.length){
+
+            msgIndex = 0;
+
+        }
+
+        charIndex = 0;
+
+        setTimeout(typeEffect,400);
+
+    }
+
+}
+
+terminal.innerHTML = "";
+
+typeEffect();
+
+</script>
+
+        <div class="glass-card">
+
+            <p style="line-height:2; color:#d6d6d6;">
+
+                    First Class Honors Computer Science graduate from Taif University with a strong interest in cybersecurity, cyber defense, and security operations.
+
+                    Holder of multiple cybersecurity certifications, including Network+, Security+, CySA+, CSA, CND, and eCTHP, demonstrating expertise in network security, threat detection, vulnerability management, and defensive security practices.
+
+                    Developed "OptiScan," an AI-powered medical diagnosis system that achieved 98% accuracy in detecting eye diseases using deep learning models. The project earned third place in the graduation projects competition at Taif University.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- EXPERIENCE TIMELINE -->
+
+<section id="experience">
+
+    <h2 class="section-title">
+        Experience Timeline
+    </h2>
+
+    <div class="timeline">
+
+        <div class="timeline-item left">
+
+            <div class="glass-card">
+
+                <h3 style="color:#00ffcc;">
+                    Education Department Training
+                </h3>
+
+                <p>
+                    Completed a cooperative training program at the Education Department in Taif within the Information Technology Department.
+
+                    Worked on databases, user interfaces, and data integration, while gaining practical experience in database analysis and system connectivity.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="timeline-item right">
+
+            <div class="glass-card">
+
+                <h3 style="color:#00ffcc;">
+                    Speridian Technologies - Tamheer
+                </h3>
+
+                <p>
+                    Worked as a Programmer Analyst at Speridian Technologies through the Tamheer program, where I gained hands-on experience with Oracle Fusion ERP systems.
+
+                    Responsibilities included system configuration, access management, security roles and permissions, workflow optimization, and generating reports using OTBI and PFA tools. Collaborated with teams to analyze business requirements and implement secure and efficient enterprise solutions.                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- PROJECTS -->
+
+<section id="projects">
+
+    <h2 class="section-title">
+        Projects
+    </h2>
+
+    <div class="projects">
+
+        <div class="glass-card project-card">
+
+            <h3>
+                OptiScan - AI Medical System
+            </h3>
+
+            <p>
+
+                OptiScan is an AI-powered eye disease detection system developed as a graduation project using Optical Coherence Tomography (OCT) images.
+
+                The model was trained on approximately 84,000 retinal OCT images to classify CNV, DME, Drusen, and Normal cases using deep learning models including CNN, VGG16, ResNet50, and DenseNet121.
+
+                The project achieved 98% accuracy and won third place in the graduation projects competition at Taif University.
+
+            </p>
+
+            <a href="OpticScan.html" class="btn">
+            View Full Case Study
+            </a>
+
+        </div>
+
+        <div class="glass-card project-card">
+
+            <h3>
+                Juice Website
+            </h3>
+
+            <p>
+
+                Web application project focused on UI/UX design,
+                frontend development, and database integration.
+
+            </p>
+
+            <a href="https://github.com/ShumukhEbrahim/Juices"
+               class="btn">
+               GitHub
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CERTIFICATES -->
+
+<section id="certifications">
+
+    <h2 class="section-title">
+        Certifications
+    </h2>
+
+    <div class="certificates">
+
+        <img src="Network+.png">
+        <img src="Security+.png">
+        <img src="CySA+.png">
+        <img src="CSA.png">
+        <img src="eCTHP.png">
+        <img src="CND.png">
+
+    </div>
+
+</section>
+
+<!-- SKILLS -->
+
+<section>
+
+    <h2 class="section-title">
+        Skills
+    </h2>
+
+    <div class="skills">
+
+        <div class="skill">Cybersecurity</div>
+        <div class="skill">Oracle Fusion</div>
+        <div class="skill">OTBI</div>
+        <div class="skill">Python</div>
+        <div class="skill">AI & Deep Learning</div>
+        <div class="skill">SQL</div>
+        <div class="skill">Linux</div>
+        <div class="skill">System Administration</div>
+        <div class="skill">Networking</div>
+
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+    <h2 class="section-title">
+        Contact
+    </h2>
+
+    <div class="contact-links">
+
+        <a href="https://github.com/ShumukhAlharthi">
+            GitHub
+        </a>
+
+        <a href="https://www.linkedin.com/in/shumukh-alharthi-47519a313/?locale=ar">
+            LinkedIn
+        </a>
+
+        <a href="mailto:shumukhalharithi@gmail.com">
+            Email
+        </a>
+
+    </div>
+
+</section>
+
+<footer>
+
+    © 2026 Cybersecurity Portfolio
+
+</footer>
+
+<script>
+
+/* LOADER */
+
+window.addEventListener("load", ()=>{
+
+    setTimeout(()=>{
+
+        document.getElementById("loader").style.opacity="0";
+
+        setTimeout(()=>{
+
+            document.getElementById("loader").style.display="none";
+
+        },1000)
+
+    },2000)
+
+})
+
+/* MATRIX EFFECT */
+
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 14;
+const columns = canvas.width/fontSize;
+
+const drops = [];
+
+for(let x=0;x<columns;x++){
+
+    drops[x]=1;
+
+}
+
+function draw(){
+
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle="#00ffcc";
+    ctx.font=fontSize+"px monospace";
+
+    for(let i=0;i<drops.length;i++){
+
+        const text=letters.charAt(Math.floor(Math.random()*letters.length));
+
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+        if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+
+            drops[i]=0;
+
+        }
+
+        drops[i]++;
+
+    }
+
+}
+
+setInterval(draw,33);
+
+/* TERMINAL TYPING */
+
+const typingText = [
+    "Initializing Security Protocols...",
+    "Loading AI Systems...",
+    "Cyber Defense Specialist...",
+    "Oracle Fusion Experience...",
+    "Threat Detection & Analysis..."
+];
+
+let count = 0;
+let index = 0;
+let currentText = "";
+let letter = "";
+
+(function type(){
+
+    if(count === typingText.length){
+
+        count = 0;
+
+    }
+
+    currentText = typingText[count];
+    letter = currentText.slice(0, ++index);
+
+    document.getElementById("typing").textContent = letter;
+
+    if(letter.length === currentText.length){
+
+        count++;
+        index = 0;
+
+        setTimeout(type,1500);
+
+    }else{
+
+        setTimeout(type,80);
+
+    }
+
+})();
+
+</script>
+
+</body>
+</html
